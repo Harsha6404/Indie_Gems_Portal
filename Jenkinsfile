@@ -20,16 +20,17 @@ pipeline {
         sh 'docker build -t game .'
     }
 }
-        stage('Push to Docker Hub') {
+  stage('Push to Docker Hub') {
     steps {
-      withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', passwordVariable: 'passwd', usernameVariable: 'user')]) {
-           
-         sh 'echo "$passwd" | docker login -u $user --password-stdin' 
-   sh 'docker tag game $user/game:v1'
-   sh 'docker push $user/game:v1'
-}
-}
+        withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', passwordVariable: 'passwd', usernameVariable: 'user')]) {
+            sh '''
+                echo "$passwd" | docker login -u "$user" --password-stdin
+                docker tag game $user/game:v1
+                docker push $user/game:v1
+            '''
         }
+    }
+}
 
 stage('container') {
     steps {
