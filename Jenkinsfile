@@ -29,6 +29,7 @@ pipeline {
    sh 'docker push $user/game:v1'
 }
 }
+        }
 
 stage('container') {
     steps {
