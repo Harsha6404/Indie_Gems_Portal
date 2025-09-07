@@ -22,7 +22,7 @@ pipeline {
        }
         stage('container') {
             steps {
-                sh 'rm -rf game1 || true'
+                sh 'rm -f game1 || true'
                 sh 'docker run -itd --name game1 -p 81:80 game'
             }
         }
