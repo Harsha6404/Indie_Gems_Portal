@@ -14,6 +14,17 @@ pipeline {
         sh 'npm run build'
     }
 }
-
+       stage('docker_image') {
+           steps {
+               sh 'rmi -rf game || true '
+               sh 'docker build -t game .'
+           }
+       }
+        stage('container') {
+            steps {
+                sh 'rm -rf con1 || true'
+                sh 'docker run -itd --name con1 -p 88:80 game'
+            }
+        }
     }
 }
